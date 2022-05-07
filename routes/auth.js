@@ -55,6 +55,7 @@ router.post('/login',async(req,res)=>{
                 res.cookie("jwt",token,{
                     expires:new Date(Date.now() + 2600000000),
                     httpOnly:true,
+                    sameSite:'none'
                 })
                 res.status(200).json(user)
             }
