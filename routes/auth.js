@@ -57,7 +57,6 @@ router.post('/login',async(req,res)=>{
                     httpOnly:true,
                     sameSite:'none',
                     secure:true,
-                    path:"/"
                 })
                 res.status(200).json(user)
             }
@@ -77,7 +76,7 @@ router.post('/login',async(req,res)=>{
 router.get('/logout',auth,async(req,res)=>{
     try{
 res.clearCookie("jwt",{httpOnly:true, sameSite:'none',
-secure:true, path:"/"})
+secure:true})
 res.user.token=""
 await res.user.save()
 res.status(200).json("logged out successfully")
