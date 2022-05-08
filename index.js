@@ -16,7 +16,7 @@ const multer=require('multer')
 
 app.use(
     cors({
-      origin: ["http://localhost:3000"],
+      origin: ["http://localhost:3000","https://faceclone-ef407.web.app"],
       credentials: true,
     })
   );
