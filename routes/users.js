@@ -141,4 +141,13 @@ router.get('/followers',async(req,res)=>{
     }
 })
 
+router.post('/search',async(req,res)=>{
+    try{
+        const text=req.body.text
+        const result=await Users.find({$text:{$search:text}}).select('-password -updatedAt')
+        res.status(200).json(result)
+    }catch(e){
+        console.log(e)
+    }
+})
 module.exports=router
