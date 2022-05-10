@@ -11,7 +11,7 @@ const postRoute=require('./routes/posts')
 const get_auth=require('./config/get_auth')
 const cookieParser=require('cookie-parser')
 const cors=require('cors');
-const multer=require('multer')
+// const multer=require('multer')
 
 
 app.use(
@@ -21,13 +21,6 @@ app.use(
     })
   );
 
-app.use('/images',express.static(path.join(__dirname,"./public/images/")))
-app.use('/imagesposts',express.static(path.join(__dirname,"./public/images/posts")))
-app.use('/imagesperson',express.static(path.join(__dirname,"./public/images/person")))
-app.use('/imagescoverpic',express.static(path.join(__dirname,"./public/images/coverpic")))
-
-
-console.log(path.join(__dirname,"./public/images/assets"))
 const PORT=process.env.PORT || 8000
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
@@ -35,7 +28,6 @@ mongoose.connect(process.env.MONGO_URL)
 }).catch((e)=>{
     console.log("no connection" +e)
 })
-
 
 
 //middlewares
@@ -49,32 +41,40 @@ app.use('/api/users/auth',authRoute)
 app.use('/api/posts',postRoute)
 
 
-const storage=multer.diskStorage({
-    destination:(req,file,cb)=>{
-        if(req.body.cat==="posts")
-        {
-            cb(null,"./public/images/posts")
-        }else if(req.body.cat==="person")
-        {
-            cb(null,"./public/images/person")
-        }
-        
-    },
-    filename:(req,file,cb)=>{
-        cb(null,req.body.name)
-    },
-})
-
-const upload=multer({storage})
-app.post('/api/upload/images',upload.single('file'),(req,res)=>{
-    try{
-        res.status(200).json("images uploaded successfully")
-    }catch(e){
-        console.log(e)
-    }
-})
-
 
 app.listen(PORT,()=>{
     console.log(`connected to port ${PORT}`)
 })
+
+
+// app.use('/images',express.static(path.join(__dirname,"./public/images/")))
+// app.use('/imagesposts',express.static(path.join(__dirname,"./public/images/posts")))
+// app.use('/imagesperson',express.static(path.join(__dirname,"./public/images/person")))
+// app.use('/imagescoverpic',express.static(path.join(__dirname,"./public/images/coverpic")))\
+
+// const storage=multer.diskStorage({
+//     destination:(req,file,cb)=>{
+//         if(req.body.cat==="posts")
+//         {
+//             cb(null,"./public/images/posts")
+//         }else if(req.body.cat==="person")
+//         {
+//             cb(null,"./public/images/person")
+//         }
+        
+//     },
+//     filename:(req,file,cb)=>{
+//         cb(null,req.body.name)
+//     },
+// })
+
+// const upload=multer({storage})
+// app.post('/api/upload/images',upload.single('file'),(req,res)=>{
+//     try{
+//         res.status(200).json("images uploaded successfully")
+//     }catch(e){
+//         console.log(e)
+//     }
+// })
+
+
